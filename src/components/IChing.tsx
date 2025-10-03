@@ -104,19 +104,56 @@ const IChing: React.FC = () => {
     setChangingLines(newChangingLines);
   };
 
-  // 隨機生成卦象
+  // 隨機生成卦象（依三枚硬幣法，分少陰、少陽、老陰、老陽）
+  // 三枚硬幣規則：
+  // 正面3分，反面2分，三枚總和只會是 6、7、8、9
+  // 6分（全反）：老陰（陰、變）
+  // 7分（一正兩反）：少陰（陰、不變）
+  // 8分（兩正一反）：少陽（陽、不變）
+  // 9分（全正）：老陽（陽、變）
+  // 產生時若不是這四種分數則重丟，確保每一爻都正確
   const generateRandomHexagram = () => {
-    const randomSelect = Array.from({ length: 6 }, () => Math.random() > 0.5);
-    setSelect(randomSelect);
-    // 重置變爻
-    setChangingLines([false, false, false, false, false, false]);
+    const newSelect: boolean[] = [];
+    const newChangingLines: boolean[] = [];
+    for (let i = 0; i < 6; i++) {
+      let sum = 0;
+      while (![6, 7, 8, 9].includes(sum)) {
+        const coins = [
+          Math.random() > 0.5 ? 3 : 2,
+          Math.random() > 0.5 ? 3 : 2,
+          Math.random() > 0.5 ? 3 : 2
+        ];
+        sum = coins[0] + coins[1] + coins[2];
+      }
+      console.log(`第${i + 1}爻分數:`, sum);
+      if (sum === 6) {
+        // 老陰：陰爻且變爻
+        newSelect.push(false);
+        newChangingLines.push(true);
+      } else if (sum === 7) {
+        // 少陰：陰爻不變
+        newSelect.push(false);
+        newChangingLines.push(false);
+      } else if (sum === 8) {
+        // 少陽：陽爻不變
+        newSelect.push(true);
+        newChangingLines.push(false);
+      } else if (sum === 9) {
+        // 老陽：陽爻且變爻
+        newSelect.push(true);
+        newChangingLines.push(true);
+      }
+    }
+    console.log(newSelect, newChangingLines);
+    setSelect(newSelect.reverse());
+    setChangingLines(newChangingLines.reverse());
   };
 
   // 將布林陣列轉換為卦象名稱
   const getHexagramInfo = () => {
     // 將陣列反轉，因為易經爻序是從下到上（第一爻在下，第六爻在上）
     // 但我們的陣列索引是從上到下的
-    const reversedSelect = [...select].reverse();
+    const reversedSelect = [...select];
     const binaryString = reversedSelect.map(val => val ? '1' : '0').join('');
 
     // 從映射表中查找對應的卦象編號
@@ -202,16 +239,21 @@ const IChing: React.FC = () => {
           <button className="iching-random-btn" onClick={generateRandomHexagram}>隨機卦象</button>
         </div>
         <div className="iching-lines">
-          {select.map((isYang, index) => (
-            <YinYang
-              key={index}
-              isYang={isYang}
-              onClick={() => toggleYinYang(index)}
-              index={index}
-              isChanging={changingLines[index]}
-              onChangingToggle={() => toggleChangingLine(index)}
-            />
-          ))}
+          {[...select].map((_, i) => {
+            const idx = select.length - 1 - i;
+            // indexForDisplay: 6~1
+            const indexForDisplay = i;
+            return (
+              <YinYang
+                key={idx}
+                isYang={select[idx]}
+                onClick={() => toggleYinYang(idx)}
+                index={indexForDisplay}
+                isChanging={changingLines[idx]}
+                onChangingToggle={() => toggleChangingLine(idx)}
+              />
+            );
+          })}
         </div>
       </div>
 
