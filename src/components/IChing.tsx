@@ -233,9 +233,20 @@ const IChing: React.FC = () => {
     <div className="iching-root">
       <h1 className="iching-title">易經卦象速查</h1>
 
+      <div className="iching-help">
+        <strong>使用說明</strong>
+        <div className="iching-help-lines">
+          <div>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</div>
+          <div>點擊線條可以切換陰爻（斷線）和陽爻（實線）</div>
+          <div>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</div>
+          <div>變爻會使該爻的陰陽顛倒，形成變卦</div>
+          <div>共有 64 種可能的卦象組合</div>
+        </div>
+      </div>
+
       <div className="iching-panel">
         <div className="iching-panel-header">
-          <h3 className="iching-panel-header-title">點擊下方線條來改變陰陽</h3>
+          <h3 className="iching-panel-header-title">起卦</h3>
         </div>
         <div className="iching-lines">
           {[...select].map((_, i) => {
@@ -323,17 +334,6 @@ const IChing: React.FC = () => {
           </div>
         </React.Fragment>
       )}
-
-      <div className="iching-help">
-        <strong>使用說明</strong>
-        <div className="iching-help-lines">
-          <div>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</div>
-          <div>點擊線條可以切換陰爻（斷線）和陽爻（實線）</div>
-          <div>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</div>
-          <div>變爻會使該爻的陰陽顛倒，形成變卦</div>
-          <div>共有 64 種可能的卦象組合</div>
-        </div>
-      </div>
     </div>
   );
 };
