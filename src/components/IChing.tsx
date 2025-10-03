@@ -276,11 +276,7 @@ const IChing: React.FC = () => {
       changingLines[index] ? !value : value
     );
 
-    // 將陣列反轉，因為易經爻序是從下到上
-    const reversedChangedSelect = [...changedSelect].reverse();
-    const binaryString = reversedChangedSelect
-      .map((val) => (val ? "1" : "0"))
-      .join("");
+    const binaryString = changedSelect.map((val) => (val ? "1" : "0")).join("");
 
     // 從映射表中查找對應的卦象編號
     const hexagramNumber = hexagramMapping[binaryString];
@@ -381,65 +377,69 @@ const IChing: React.FC = () => {
           <div className="iching-changed-panel">
             <h4 className="iching-changed-title">變卦結果</h4>
             <div className="iching-changed-lines">
-              {changedHexagramInfo.changedLines?.map((isYang, index) => (
-                <div
-                  key={index}
-                  className="iching-changed-line"
-                  style={{ opacity: changingLines[index] ? 1 : 0.6 }}
-                >
-                  <div className="iching-changed-svg">
-                    <svg width="120" height="20" viewBox="0 0 120 20">
-                      {isYang ? (
-                        <rect
-                          x="10"
-                          y="8"
-                          width="100"
-                          height="4"
-                          className={
-                            changingLines[index]
-                              ? "changed-line-svg"
-                              : "normal-line-svg"
-                          }
-                          rx="2"
-                        />
-                      ) : (
-                        <React.Fragment>
+              {[...changedHexagramInfo.changedLines].map((_, i) => {
+                const idx = changedHexagramInfo.changedLines.length - 1 - i;
+                const isYang = changedHexagramInfo.changedLines[idx];
+                return (
+                  <div
+                    key={idx}
+                    className="iching-changed-line"
+                    style={{ opacity: changingLines[idx] ? 1 : 0.6 }}
+                  >
+                    <div className="iching-changed-svg">
+                      <svg width="120" height="20" viewBox="0 0 120 20">
+                        {isYang ? (
                           <rect
                             x="10"
                             y="8"
-                            width="40"
+                            width="100"
                             height="4"
                             className={
-                              changingLines[index]
+                              changingLines[idx]
                                 ? "changed-line-svg"
                                 : "normal-line-svg"
                             }
                             rx="2"
                           />
-                          <rect
-                            x="70"
-                            y="8"
-                            width="40"
-                            height="4"
-                            className={
-                              changingLines[index]
-                                ? "changed-line-svg"
-                                : "normal-line-svg"
-                            }
-                            rx="2"
-                          />
-                        </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <rect
+                              x="10"
+                              y="8"
+                              width="40"
+                              height="4"
+                              className={
+                                changingLines[idx]
+                                  ? "changed-line-svg"
+                                  : "normal-line-svg"
+                              }
+                              rx="2"
+                            />
+                            <rect
+                              x="70"
+                              y="8"
+                              width="40"
+                              height="4"
+                              className={
+                                changingLines[idx]
+                                  ? "changed-line-svg"
+                                  : "normal-line-svg"
+                              }
+                              rx="2"
+                            />
+                          </React.Fragment>
+                        )}
+                      </svg>
+                    </div>
+                    <div className="iching-changed-label">
+                      第{i + 1}爻 - {isYang ? "陽" : "陰"}
+                      {changingLines[idx] && (
+                        <span className="changed">變</span>
                       )}
-                    </svg>
+                    </div>
                   </div>
-                  <div className="iching-changed-label">
-                    第{index + 1}爻 - {isYang ? "陽" : "陰"}
-                    {changingLines[index] && (
-                      <span className="changed">變</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="iching-changed-info">
               <p className="iching-changed-name">
