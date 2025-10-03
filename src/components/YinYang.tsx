@@ -25,7 +25,7 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
               y="8"
               width="100"
               height="4"
-              fill="#2c3e50"
+              className="yinyang-line-svg"
               rx="2"
             />
           ) : (
@@ -36,7 +36,7 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
                 y="8"
                 width="40"
                 height="4"
-                fill="#2c3e50"
+                className="yinyang-line-svg"
                 rx="2"
               />
               <rect
@@ -44,7 +44,7 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
                 y="8"
                 width="40"
                 height="4"
-                fill="#2c3e50"
+                className="yinyang-line-svg"
                 rx="2"
               />
             </>
@@ -62,10 +62,7 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
             cx="8"
             cy="8"
             r="6"
-            fill={isChanging ? '#dc3545' : 'none'}
-            stroke="#dc3545"
-            strokeWidth="2"
-            strokeDasharray={isChanging ? 'none' : '2,2'}
+            className={isChanging ? 'yinyang-dot-svg yinyang-dot-active' : 'yinyang-dot-svg'}
           />
         </svg>
       </div>

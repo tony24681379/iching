@@ -1,3 +1,16 @@
+/* 隨機卦象按鈕置中並增加間距 */
+.iching-random-btn-row {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 8px 0;
+}
+/* 變卦 SVG 線條顏色 */
+.normal-line-svg {
+  fill: #2c3e50;
+}
+.changed-line-svg {
+  fill: #dc3545;
+}
 /* IChing 卦象主頁樣式 */
 
 .iching-root {
@@ -5,6 +18,8 @@
   max-width: 600px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  background: #f5ecd7;
+  min-height: 100vh;
 }
 
 .iching-title {
@@ -14,10 +29,12 @@
 }
 
 .iching-panel {
-  background-color: #f8f9fa;
+  background-color: #ede3c7;
   padding: 20px;
   border-radius: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
+  border: 2px solid #c2a06a;
+  box-shadow: 0 2px 8px rgba(108,74,36,0.08);
 }
 
 .iching-panel-header {
@@ -25,15 +42,21 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 10px 16px;
 }
 
 .iching-panel-header-title {
   color: #495057;
-  margin: 0;
+  margin: 0 auto;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
 }
 
 .iching-random-btn {
-  background-color: #007bff;
+  background-color: #c97a40;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -44,7 +67,7 @@
   transition: background-color 0.2s;
 }
 .iching-random-btn:hover {
-  background-color: #0056b3;
+  background-color: #a05c2a;
 }
 
 .iching-lines {
@@ -55,7 +78,7 @@
 }
 
 .iching-info {
-  background-color: #e9ecef;
+  border: 2px solid #c2a06a;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -68,8 +91,9 @@
   font-size: 18px;
   line-height: 1.8;
 }
-.iching-info-name {
-  font-size: 24px;
+.iching-info-name,
+.iching-changed-name {
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -84,17 +108,20 @@
 }
 
 .iching-changed-panel {
-  background-color: #f8d7da;
+  background-color: #f6e2da;
   padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  margin-top: 32px;
-  border: 1px solid #f5c6cb;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  border: 2px solid #dc3545;
+  box-shadow: 0 2px 8px rgba(108,74,36,0.08);
 }
 .iching-changed-title {
   color: #721c24;
   margin-bottom: 15px;
   text-align: center;
+  font-size: 22px;
+  font-weight: bold;
 }
 .iching-changed-lines {
   display: flex;
@@ -135,10 +162,18 @@
 }
 
 .iching-help {
-  margin-top: 30px;
+  margin-top: 0;
+  margin-bottom: 16px;
   padding: 15px;
   background-color: #d1ecf1;
   border-radius: 8px;
   font-size: 14px;
   color: #0c5460;
+  border: 2px solid #b7e2ea;
+}
+.iching-help strong {
+  font-size: 22px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
 }

@@ -1,3 +1,23 @@
+/* 陰陽爻 SVG 線條顏色 */
+.yinyang-line-svg {
+  fill: #6c4a24;
+}
+
+/* 變卦圓點 SVG 樣式 */
+.yinyang-dot-svg {
+  fill: none;
+  stroke: #dc3545;
+  stroke-width: 2;
+  stroke-dasharray: 2,2;
+}
+.yinyang-dot-active {
+  fill: #dc3545;
+  stroke-dasharray: none;
+}
+/* 陰陽爻 SVG 線條顏色 */
+.yinyang-line-svg {
+  fill: #2c3e50;
+}
 /* YinYang 組件樣式 */
 
 .yinyang-line-row {

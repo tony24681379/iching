@@ -231,12 +231,11 @@ const IChing: React.FC = () => {
 
   return (
     <div className="iching-root">
-      <h1 className="iching-title">易經卦象生成器</h1>
+      <h1 className="iching-title">易經卦象速查</h1>
 
       <div className="iching-panel">
         <div className="iching-panel-header">
           <h3 className="iching-panel-header-title">點擊下方線條來改變陰陽</h3>
-          <button className="iching-random-btn" onClick={generateRandomHexagram}>隨機卦象</button>
         </div>
         <div className="iching-lines">
           {[...select].map((_, i) => {
@@ -254,6 +253,9 @@ const IChing: React.FC = () => {
               />
             );
           })}
+        </div>
+        <div className="iching-random-btn-row">
+          <button className="iching-random-btn" onClick={generateRandomHexagram}>隨機卦象</button>
         </div>
         <div className="iching-info-main" style={{ marginTop: '20px', textAlign: 'center' }}>
           <p className={`iching-info-name ${hexagramInfo.isValid ? 'valid' : 'invalid'}`}>{hexagramInfo.fullName}</p>
@@ -278,7 +280,7 @@ const IChing: React.FC = () => {
                           y="8"
                           width="100"
                           height="4"
-                          fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                          className={changingLines[index] ? 'changed-line-svg' : 'normal-line-svg'}
                           rx="2"
                         />
                       ) : (
@@ -288,7 +290,7 @@ const IChing: React.FC = () => {
                             y="8"
                             width="40"
                             height="4"
-                            fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                            className={changingLines[index] ? 'changed-line-svg' : 'normal-line-svg'}
                             rx="2"
                           />
                           <rect
@@ -296,7 +298,7 @@ const IChing: React.FC = () => {
                             y="8"
                             width="40"
                             height="4"
-                            fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                            className={changingLines[index] ? 'changed-line-svg' : 'normal-line-svg'}
                             rx="2"
                           />
                         </React.Fragment>
@@ -323,14 +325,14 @@ const IChing: React.FC = () => {
       )}
 
       <div className="iching-help">
-        <strong>使用說明：</strong>
-        <ul style={{ marginTop: '10px', paddingLeft: '20px' }}>
-          <li>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</li>
-          <li>點擊線條可以切換陰爻（斷線）和陽爻（實線）</li>
-          <li>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</li>
-          <li>變爻會使該爻的陰陽顛倒，形成變卦</li>
-          <li>共有 64 種可能的卦象組合</li>
-        </ul>
+        <strong>使用說明</strong>
+        <div className="iching-help-lines">
+          <div>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</div>
+          <div>點擊線條可以切換陰爻（斷線）和陽爻（實線）</div>
+          <div>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</div>
+          <div>變爻會使該爻的陰陽顛倒，形成變卦</div>
+          <div>共有 64 種可能的卦象組合</div>
+        </div>
       </div>
     </div>
   );
