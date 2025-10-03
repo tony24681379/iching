@@ -1,4 +1,8 @@
 import React from "react";
+import yangSvg from "../assets/yang.svg";
+import yinSvg from "../assets/yin.svg";
+import dotSvg from "../assets/dot.svg";
+import dotActiveSvg from "../assets/dot-active.svg";
 import "./YinYang.css";
 
 interface YinYangProps {
@@ -20,55 +24,22 @@ const YinYang: React.FC<YinYangProps> = ({
     <div className="yinyang-line-row">
       {/* 陰陽爻線條 */}
       <div className="yinyang-svg-btn" onClick={onClick}>
-        <svg width="120" height="20" viewBox="0 0 120 20">
-          {isYang ? (
-            // 陽爻 - 連續的一條線
-            <rect
-              x="10"
-              y="8"
-              width="100"
-              height="4"
-              className="yinyang-line-svg"
-              rx="2"
-            />
-          ) : (
-            // 陰爻 - 中間斷開的兩條線
-            <>
-              <rect
-                x="10"
-                y="8"
-                width="40"
-                height="4"
-                className="yinyang-line-svg"
-                rx="2"
-              />
-              <rect
-                x="70"
-                y="8"
-                width="40"
-                height="4"
-                className="yinyang-line-svg"
-                rx="2"
-              />
-            </>
-          )}
-        </svg>
+        <img
+          src={isYang ? yangSvg : yinSvg}
+          alt={isYang ? "陽爻" : "陰爻"}
+          width={120}
+          height={20}
+        />
       </div>
 
       {/* 變卦圓點 */}
       <div className="yinyang-dot-btn" onClick={onChangingToggle}>
-        <svg width="16" height="16" viewBox="0 0 16 16">
-          <circle
-            cx="8"
-            cy="8"
-            r="6"
-            className={
-              isChanging
-                ? "yinyang-dot-svg yinyang-dot-active"
-                : "yinyang-dot-svg"
-            }
-          />
-        </svg>
+        <img
+          src={isChanging ? dotActiveSvg : dotSvg}
+          alt={isChanging ? "變爻" : "圓點"}
+          width={16}
+          height={16}
+        />
       </div>
 
       {/* 爻位標籤 */}
