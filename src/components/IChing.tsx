@@ -86,6 +86,9 @@ const IChing: React.FC = () => {
   // select[6] 陣列，true 為陽，false 為陰
   const [select, setSelect] = useState<boolean[]>([true, true, true, false, false, false]);
 
+  // changingLines[6] 陣列，true 為變爻，false 為不變
+  const [changingLines, setChangingLines] = useState<boolean[]>([false, false, false, false, false, false]);
+
   // 點擊切換陰陽的函數
   const toggleYinYang = (index: number) => {
     const newSelect = [...select];
@@ -93,10 +96,19 @@ const IChing: React.FC = () => {
     setSelect(newSelect);
   };
 
+  // 切換變爻狀態的函數
+  const toggleChangingLine = (index: number) => {
+    const newChangingLines = [...changingLines];
+    newChangingLines[index] = !newChangingLines[index];
+    setChangingLines(newChangingLines);
+  };
+
   // 隨機生成卦象
   const generateRandomHexagram = () => {
     const randomSelect = Array.from({ length: 6 }, () => Math.random() > 0.5);
     setSelect(randomSelect);
+    // 重置變爻
+    setChangingLines([false, false, false, false, false, false]);
   };
 
   // 將布林陣列轉換為卦象名稱
@@ -130,7 +142,54 @@ const IChing: React.FC = () => {
         isValid: false
       };
     }
-  };  const hexagramInfo = getHexagramInfo();
+  };
+
+  // 計算變卦結果
+  const getChangedHexagramInfo = () => {
+    // 如果沒有變爻，返回 null
+    const hasChangingLines = changingLines.some(line => line);
+    if (!hasChangingLines) {
+      return null;
+    }
+
+    // 計算變卦：變爻的陰陽會顛倒
+    const changedSelect = select.map((value, index) =>
+      changingLines[index] ? !value : value
+    );
+
+    // 將陣列反轉，因為易經爻序是從下到上
+    const reversedChangedSelect = [...changedSelect].reverse();
+    const binaryString = reversedChangedSelect.map(val => val ? '1' : '0').join('');
+
+    // 從映射表中查找對應的卦象編號
+    const hexagramNumber = hexagramMapping[binaryString];
+
+    if (hexagramNumber) {
+      const hexagramIndex = hexagramNumber - 1;
+      return {
+        binary: binaryString,
+        decimal: hexagramNumber,
+        index: hexagramIndex,
+        name: hexagramNames[hexagramIndex],
+        fullName: `第 ${hexagramNumber} 卦 - ${hexagramNames[hexagramIndex]}`,
+        isValid: true,
+        changedLines: changedSelect
+      };
+    } else {
+      return {
+        binary: binaryString,
+        decimal: 0,
+        index: -1,
+        name: '未知',
+        fullName: `未知變卦 (${binaryString})`,
+        isValid: false,
+        changedLines: changedSelect
+      };
+    }
+  };
+
+  const hexagramInfo = getHexagramInfo();
+  const changedHexagramInfo = getChangedHexagramInfo();
 
   return (
     <div style={{
@@ -198,6 +257,8 @@ const IChing: React.FC = () => {
               isYang={isYang}
               onClick={() => toggleYinYang(index)}
               index={index}
+              isChanging={changingLines[index]}
+              onChangingToggle={() => toggleChangingLine(index)}
             />
           ))}
         </div>
@@ -238,6 +299,99 @@ const IChing: React.FC = () => {
         </div>
       </div>
 
+      {/* 變卦結果顯示 */}
+      {changedHexagramInfo && (
+        <div style={{
+          backgroundColor: '#f8d7da',
+          padding: '20px',
+          borderRadius: '8px',
+          marginBottom: '20px',
+          border: '1px solid #f5c6cb'
+        }}>
+          <h4 style={{ color: '#721c24', marginBottom: '15px', textAlign: 'center' }}>
+            變卦結果
+          </h4>
+
+          {/* 變卦的卦象顯示（不可編輯） */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            alignItems: 'center',
+            gap: '4px',
+            marginBottom: '15px'
+          }}>
+            {changedHexagramInfo.changedLines?.map((isYang, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                margin: '4px 0',
+                opacity: changingLines[index] ? 1 : 0.6 // 變爻高亮顯示
+              }}>
+                <div style={{ padding: '4px' }}>
+                  <svg width="120" height="20" viewBox="0 0 120 20">
+                    {isYang ? (
+                      <rect
+                        x="10"
+                        y="8"
+                        width="100"
+                        height="4"
+                        fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                        rx="2"
+                      />
+                    ) : (
+                      <>
+                        <rect
+                          x="10"
+                          y="8"
+                          width="40"
+                          height="4"
+                          fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                          rx="2"
+                        />
+                        <rect
+                          x="70"
+                          y="8"
+                          width="40"
+                          height="4"
+                          fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                          rx="2"
+                        />
+                      </>
+                    )}
+                  </svg>
+                </div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#721c24',
+                  minWidth: '80px'
+                }}>
+                  第{index + 1}爻 - {isYang ? '陽' : '陰'}
+                  {changingLines[index] && <span style={{ marginLeft: '4px' }}>變</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 變卦資訊 */}
+          <div style={{ textAlign: 'center' }}>
+            <p style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#721c24',
+              marginBottom: '10px'
+            }}>
+              {changedHexagramInfo.fullName}
+            </p>
+            <p style={{ fontSize: '14px', color: '#721c24' }}>
+              變爻位置：{changingLines.map((isChanging, index) =>
+                isChanging ? `第${index + 1}爻` : null
+              ).filter(Boolean).join('、')}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* 使用說明 */}
       <div style={{
         marginTop: '30px',
@@ -251,6 +405,8 @@ const IChing: React.FC = () => {
         <ul style={{ marginTop: '10px', paddingLeft: '20px' }}>
           <li>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</li>
           <li>點擊線條可以切換陰爻（斷線）和陽爻（實線）</li>
+          <li>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</li>
+          <li>變爻會使該爻的陰陽顛倒，形成變卦</li>
           <li>true = 陽爻，false = 陰爻</li>
           <li>共有 64 種可能的卦象組合</li>
         </ul>
