@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import YinYang from "./YinYang";
 import "./IChing.css";
+import ChangedLine from "./ChangedLine";
 
 const IChing: React.FC = () => {
   // 64 卦象名稱陣列（按照傳統編號順序）
@@ -377,67 +378,15 @@ const IChing: React.FC = () => {
           <div className="iching-changed-panel">
             <h4 className="iching-changed-title">變卦結果</h4>
             <div className="iching-changed-lines">
-              {[...changedHexagramInfo.changedLines].map((_, i) => {
-                const idx = changedHexagramInfo.changedLines.length - 1 - i;
-                const isYang = changedHexagramInfo.changedLines[idx];
+              {changedHexagramInfo.changedLines.map((_, i, arr) => {
+                const idx = arr.length - 1 - i;
                 return (
-                  <div
+                  <ChangedLine
                     key={idx}
-                    className="iching-changed-line"
-                    style={{ opacity: changingLines[idx] ? 1 : 0.6 }}
-                  >
-                    <div className="iching-changed-svg">
-                      <svg width="120" height="20" viewBox="0 0 120 20">
-                        {isYang ? (
-                          <rect
-                            x="10"
-                            y="8"
-                            width="100"
-                            height="4"
-                            className={
-                              changingLines[idx]
-                                ? "changed-line-svg"
-                                : "normal-line-svg"
-                            }
-                            rx="2"
-                          />
-                        ) : (
-                          <React.Fragment>
-                            <rect
-                              x="10"
-                              y="8"
-                              width="40"
-                              height="4"
-                              className={
-                                changingLines[idx]
-                                  ? "changed-line-svg"
-                                  : "normal-line-svg"
-                              }
-                              rx="2"
-                            />
-                            <rect
-                              x="70"
-                              y="8"
-                              width="40"
-                              height="4"
-                              className={
-                                changingLines[idx]
-                                  ? "changed-line-svg"
-                                  : "normal-line-svg"
-                              }
-                              rx="2"
-                            />
-                          </React.Fragment>
-                        )}
-                      </svg>
-                    </div>
-                    <div className="iching-changed-label">
-                      第{i + 1}爻 - {isYang ? "陽" : "陰"}
-                      {changingLines[idx] && (
-                        <span className="changed">變</span>
-                      )}
-                    </div>
-                  </div>
+                    isYang={arr[idx]}
+                    isChanged={changingLines[idx]}
+                    index={i}
+                  />
                 );
               })}
             </div>
