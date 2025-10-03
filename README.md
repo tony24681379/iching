@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# 易經卦象速查網頁
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+本專案是一個以 React + TypeScript + Vite 製作的易經卦象速查工具，提供互動式卦象組合、變卦計算、RWD 響應式設計，適合桌面與手機瀏覽。
 
-Currently, two official plugins are available:
+## 功能特色
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 64 卦象速查，支援傳統卦名與編號
+- 六爻互動切換（陰/陽）
+- 變爻設定，顯示變卦結果
+- 三枚硬幣法隨機起卦
+- 卦象名稱、頁數顯示（隱藏彩蛋：標題連點5下顯示頁數）
+- 主題色彩柔和，排版簡潔
+- 完整 RWD，手機/桌面皆適用
+- 支援 Google 廣告區塊（可自訂位置）
 
-## React Compiler
+## 使用方式
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. 點擊每一爻線條可切換陰爻（斷線）或陽爻（實線）
+2. 點擊右側圓點可設定變爻（實心圓為變爻）
+3. 點擊「隨機卦象」按鈕可用三枚硬幣法隨機產生卦象
+4. 若有變爻，會自動顯示變卦結果
 
-## Expanding the ESLint configuration
+## 開發技術
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript
+- Vite
+- CSS 模組化
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 聯絡與建議
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+如有建議或問題，歡迎聯絡作者或於 Issues 留言。
