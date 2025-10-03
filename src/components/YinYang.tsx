@@ -1,4 +1,5 @@
 import React from 'react';
+import './YinYang.css';
 
 interface YinYangProps {
   isYang: boolean;
@@ -10,29 +11,11 @@ interface YinYangProps {
 
 const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, onChangingToggle }) => {
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      margin: '8px 0',
-      padding: '4px',
-    }}>
+    <div className="yinyang-line-row">
       {/* 陰陽爻線條 */}
       <div
-        className="yin-yang-line"
+        className="yinyang-svg-btn"
         onClick={onClick}
-        style={{
-          cursor: 'pointer',
-          borderRadius: '4px',
-          transition: 'background-color 0.2s',
-          padding: '4px',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = '#f0f0f0';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'transparent';
-        }}
       >
         <svg width="120" height="20" viewBox="0 0 120 20">
           {isYang ? (
@@ -71,23 +54,8 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
 
       {/* 變卦圓點 */}
       <div
+        className="yinyang-dot-btn"
         onClick={onChangingToggle}
-        style={{
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '24px',
-          height: '24px',
-          borderRadius: '12px',
-          transition: 'background-color 0.2s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = '#e9ecef';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'transparent';
-        }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16">
           <circle
@@ -103,14 +71,9 @@ const YinYang: React.FC<YinYangProps> = ({ isYang, onClick, index, isChanging, o
       </div>
 
       {/* 爻位標籤 */}
-      <div style={{
-        fontSize: '12px',
-        color: '#666',
-        minWidth: '80px',
-        textAlign: 'left'
-      }}>
+      <div className="yinyang-label">
         第{index + 1}爻 - {isYang ? '陽' : '陰'}
-        {isChanging && <span style={{ color: '#dc3545', marginLeft: '4px' }}>變</span>}
+        {isChanging && <span className="changed">變</span>}
       </div>
     </div>
   );

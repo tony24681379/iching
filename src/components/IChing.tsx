@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import YinYang from './YinYang';
+import './IChing.css';
 
 const IChing: React.FC = () => {
   // 64 卦象名稱陣列（按照傳統編號順序）
@@ -192,65 +193,15 @@ const IChing: React.FC = () => {
   const changedHexagramInfo = getChangedHexagramInfo();
 
   return (
-    <div style={{
-      padding: '40px',
-      maxWidth: '600px',
-      margin: '0 auto',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <h1 style={{
-        textAlign: 'center',
-        color: '#2c3e50',
-        marginBottom: '30px'
-      }}>
-        易經卦象生成器
-      </h1>
+    <div className="iching-root">
+      <h1 className="iching-title">易經卦象生成器</h1>
 
-      <div style={{
-        backgroundColor: '#f8f9fa',
-        padding: '20px',
-        borderRadius: '12px',
-        marginBottom: '30px'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}>
-          <h3 style={{ color: '#495057', margin: '0' }}>
-            點擊下方線條來改變陰陽
-          </h3>
-          <button
-            onClick={generateRandomHexagram}
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 'bold'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#0056b3';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#007bff';
-            }}
-          >
-            隨機卦象
-          </button>
+      <div className="iching-panel">
+        <div className="iching-panel-header">
+          <h3 className="iching-panel-header-title">點擊下方線條來改變陰陽</h3>
+          <button className="iching-random-btn" onClick={generateRandomHexagram}>隨機卦象</button>
         </div>
-
-        {/* 從上到下顯示六爻，按照傳統易經順序 */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column-reverse', // 反轉順序，讓第一爻在下方
-          alignItems: 'center',
-          gap: '4px'
-        }}>
+        <div className="iching-lines">
           {select.map((isYang, index) => (
             <YinYang
               key={index}
@@ -264,25 +215,10 @@ const IChing: React.FC = () => {
         </div>
       </div>
 
-      {/* 卦象資訊 */}
-      <div style={{
-        backgroundColor: '#e9ecef',
-        padding: '20px',
-        borderRadius: '8px',
-        textAlign: 'center'
-      }}>
-        <h3 style={{ color: '#495057', marginBottom: '15px' }}>
-          當前卦象資訊
-        </h3>
-        <div style={{ fontSize: '18px', lineHeight: '1.8' }}>
-          <p style={{
-            fontSize: '24px',
-            fontWeight: 'bold',
-            color: hexagramInfo.isValid ? '#2c3e50' : '#dc3545',
-            marginBottom: '15px'
-          }}>
-            {hexagramInfo.fullName}
-          </p>
+      <div className="iching-info">
+        <h3 className="iching-info-title">當前卦象資訊</h3>
+        <div className="iching-info-main">
+          <p className={`iching-info-name ${hexagramInfo.isValid ? 'valid' : 'invalid'}`}>{hexagramInfo.fullName}</p>
           {hexagramInfo.isValid ? (
             <>
               <p><strong>卦象編號：</strong>{hexagramInfo.decimal}/64</p>
@@ -291,7 +227,7 @@ const IChing: React.FC = () => {
             </>
           ) : (
             <>
-              <p style={{ color: '#dc3545' }}>⚠️ 此組合不對應傳統易經卦象</p>
+              <p className="iching-info-warn">⚠️ 此組合不對應傳統易經卦象</p>
               <p><strong>二進位：</strong>{hexagramInfo.binary}</p>
               <p><strong>陣列狀態：</strong>[{select.map(val => val.toString()).join(', ')}]</p>
             </>
@@ -299,36 +235,13 @@ const IChing: React.FC = () => {
         </div>
       </div>
 
-      {/* 變卦結果顯示 */}
       {changedHexagramInfo && (
-        <div style={{
-          backgroundColor: '#f8d7da',
-          padding: '20px',
-          borderRadius: '8px',
-          marginBottom: '20px',
-          border: '1px solid #f5c6cb'
-        }}>
-          <h4 style={{ color: '#721c24', marginBottom: '15px', textAlign: 'center' }}>
-            變卦結果
-          </h4>
-
-          {/* 變卦的卦象顯示（不可編輯） */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column-reverse',
-            alignItems: 'center',
-            gap: '4px',
-            marginBottom: '15px'
-          }}>
+        <div className="iching-changed-panel">
+          <h4 className="iching-changed-title">變卦結果</h4>
+          <div className="iching-changed-lines">
             {changedHexagramInfo.changedLines?.map((isYang, index) => (
-              <div key={index} style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                margin: '4px 0',
-                opacity: changingLines[index] ? 1 : 0.6 // 變爻高亮顯示
-              }}>
-                <div style={{ padding: '4px' }}>
+              <div key={index} className="iching-changed-line" style={{ opacity: changingLines[index] ? 1 : 0.6 }}>
+                <div className="iching-changed-svg">
                   <svg width="120" height="20" viewBox="0 0 120 20">
                     {isYang ? (
                       <rect
@@ -361,29 +274,16 @@ const IChing: React.FC = () => {
                     )}
                   </svg>
                 </div>
-                <div style={{
-                  fontSize: '12px',
-                  color: '#721c24',
-                  minWidth: '80px'
-                }}>
+                <div className="iching-changed-label">
                   第{index + 1}爻 - {isYang ? '陽' : '陰'}
-                  {changingLines[index] && <span style={{ marginLeft: '4px' }}>變</span>}
+                  {changingLines[index] && <span className="changed">變</span>}
                 </div>
               </div>
             ))}
           </div>
-
-          {/* 變卦資訊 */}
-          <div style={{ textAlign: 'center' }}>
-            <p style={{
-              fontSize: '18px',
-              fontWeight: 'bold',
-              color: '#721c24',
-              marginBottom: '10px'
-            }}>
-              {changedHexagramInfo.fullName}
-            </p>
-            <p style={{ fontSize: '14px', color: '#721c24' }}>
+          <div className="iching-changed-info">
+            <p className="iching-changed-name">{changedHexagramInfo.fullName}</p>
+            <p className="iching-changed-pos">
               變爻位置：{changingLines.map((isChanging, index) =>
                 isChanging ? `第${index + 1}爻` : null
               ).filter(Boolean).join('、')}
@@ -392,15 +292,7 @@ const IChing: React.FC = () => {
         </div>
       )}
 
-      {/* 使用說明 */}
-      <div style={{
-        marginTop: '30px',
-        padding: '15px',
-        backgroundColor: '#d1ecf1',
-        borderRadius: '8px',
-        fontSize: '14px',
-        color: '#0c5460'
-      }}>
+      <div className="iching-help">
         <strong>使用說明：</strong>
         <ul style={{ marginTop: '10px', paddingLeft: '20px' }}>
           <li>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</li>

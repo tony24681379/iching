@@ -1,0 +1,143 @@
+/* IChing 卦象主頁樣式 */
+
+.iching-root {
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.iching-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.iching-panel {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.iching-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.iching-panel-header-title {
+  color: #495057;
+  margin: 0;
+}
+
+.iching-random-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.iching-random-btn:hover {
+  background-color: #0056b3;
+}
+
+.iching-lines {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 4px;
+}
+
+.iching-info {
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+.iching-info-title {
+  color: #495057;
+  margin-bottom: 15px;
+}
+.iching-info-main {
+  font-size: 18px;
+  line-height: 1.8;
+}
+.iching-info-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.iching-info-name.valid {
+  color: #2c3e50;
+}
+.iching-info-name.invalid {
+  color: #dc3545;
+}
+.iching-info-warn {
+  color: #dc3545;
+}
+
+.iching-changed-panel {
+  background-color: #f8d7da;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+.iching-changed-title {
+  color: #721c24;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.iching-changed-lines {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 15px;
+}
+.iching-changed-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+.iching-changed-svg {
+  padding: 4px;
+}
+.iching-changed-label {
+  font-size: 12px;
+  color: #721c24;
+  min-width: 80px;
+}
+.iching-changed-label .changed {
+  margin-left: 4px;
+}
+.iching-changed-info {
+  text-align: center;
+}
+.iching-changed-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #721c24;
+  margin-bottom: 10px;
+}
+.iching-changed-pos {
+  font-size: 14px;
+  color: #721c24;
+}
+
+.iching-help {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #d1ecf1;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0c5460;
+}
