@@ -1,3 +1,9 @@
+.iching-info-page {
+  font-size: 14px;
+  color: #888;
+  margin-top: 2px;
+  display: inline-block;
+}
 /* 隨機卦象按鈕置中並增加間距 */
 .iching-random-btn-row {
   display: flex;

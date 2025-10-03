@@ -71,6 +71,14 @@ const IChing: React.FC = () => {
     "未濟",
   ];
 
+  const pages = [
+    25, 47, 59, 67, 75, 81, 89, 97, 103, 109, 115, 123, 129, 137, 143, 149, 155,
+    163, 171, 177, 183, 191, 197, 203, 211, 217, 223, 229, 235, 241, 249, 257,
+    263, 279, 275, 281, 289, 295, 303, 309, 317, 325, 333, 339, 347, 355, 361,
+    369, 375, 383, 389, 395, 401, 407, 413, 419, 425, 431, 437, 443, 449, 457,
+    465, 473,
+  ];
+
   // 建立六爻組合到卦象編號的映射表
   // 格式: "從下到上六爻的二進位字串" -> 卦象編號(1-64)
   const hexagramMapping: { [key: string]: number } = {
@@ -238,6 +246,7 @@ const IChing: React.FC = () => {
         decimal: hexagramNumber,
         index: hexagramIndex,
         name: hexagramNames[hexagramIndex],
+        page: pages[hexagramIndex],
         fullName: `第 ${hexagramNumber} 卦 - ${hexagramNames[hexagramIndex]}`,
         isValid: true,
       };
@@ -283,6 +292,7 @@ const IChing: React.FC = () => {
         decimal: hexagramNumber,
         index: hexagramIndex,
         name: hexagramNames[hexagramIndex],
+        page: pages[hexagramIndex],
         fullName: `第 ${hexagramNumber} 卦 - ${hexagramNames[hexagramIndex]}`,
         isValid: true,
         changedLines: changedSelect,
@@ -357,6 +367,8 @@ const IChing: React.FC = () => {
             }`}
           >
             {hexagramInfo.fullName}
+            <br />
+            <span className="iching-info-page">頁數：{hexagramInfo.page}</span>
           </p>
           {hexagramInfo.isValid ? null : (
             <p className="iching-info-warn">⚠️ 此組合不對應傳統易經卦象</p>
@@ -432,6 +444,10 @@ const IChing: React.FC = () => {
             <div className="iching-changed-info">
               <p className="iching-changed-name">
                 {changedHexagramInfo.fullName}
+                <br />
+                <span className="iching-info-page">
+                  頁數：{changedHexagramInfo.page}
+                </span>
               </p>
               <p className="iching-changed-pos">
                 變爻位置：
