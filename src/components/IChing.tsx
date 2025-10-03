@@ -255,31 +255,16 @@ const IChing: React.FC = () => {
             );
           })}
         </div>
-      </div>
-
-      <div className="iching-info">
-        <h3 className="iching-info-title">當前卦象資訊</h3>
-        <div className="iching-info-main">
+        <div className="iching-info-main" style={{ marginTop: '20px', textAlign: 'center' }}>
           <p className={`iching-info-name ${hexagramInfo.isValid ? 'valid' : 'invalid'}`}>{hexagramInfo.fullName}</p>
-          {hexagramInfo.isValid ? (
-            <>
-              <p><strong>卦象編號：</strong>{hexagramInfo.decimal}/64</p>
-              <p><strong>二進位：</strong>{hexagramInfo.binary}</p>
-              <p><strong>陣列狀態：</strong>[{select.map(val => val.toString()).join(', ')}]</p>
-            </>
-          ) : (
-            <>
-              <p className="iching-info-warn">⚠️ 此組合不對應傳統易經卦象</p>
-              <p><strong>二進位：</strong>{hexagramInfo.binary}</p>
-              <p><strong>陣列狀態：</strong>[{select.map(val => val.toString()).join(', ')}]</p>
-            </>
+          {hexagramInfo.isValid ? null : (
+            <p className="iching-info-warn">⚠️ 此組合不對應傳統易經卦象</p>
           )}
         </div>
       </div>
 
       {changedHexagramInfo && (
         <React.Fragment>
-          <div style={{ height: '32px' }}></div>
           <div className="iching-changed-panel">
             <h4 className="iching-changed-title">變卦結果</h4>
             <div className="iching-changed-lines">
@@ -344,7 +329,6 @@ const IChing: React.FC = () => {
           <li>點擊線條可以切換陰爻（斷線）和陽爻（實線）</li>
           <li>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</li>
           <li>變爻會使該爻的陰陽顛倒，形成變卦</li>
-          <li>true = 陽爻，false = 陰爻</li>
           <li>共有 64 種可能的卦象組合</li>
         </ul>
       </div>
