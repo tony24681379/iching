@@ -236,60 +236,63 @@ const IChing: React.FC = () => {
       </div>
 
       {changedHexagramInfo && (
-        <div className="iching-changed-panel">
-          <h4 className="iching-changed-title">變卦結果</h4>
-          <div className="iching-changed-lines">
-            {changedHexagramInfo.changedLines?.map((isYang, index) => (
-              <div key={index} className="iching-changed-line" style={{ opacity: changingLines[index] ? 1 : 0.6 }}>
-                <div className="iching-changed-svg">
-                  <svg width="120" height="20" viewBox="0 0 120 20">
-                    {isYang ? (
-                      <rect
-                        x="10"
-                        y="8"
-                        width="100"
-                        height="4"
-                        fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
-                        rx="2"
-                      />
-                    ) : (
-                      <>
+        <React.Fragment>
+          <div style={{ height: '32px' }}></div>
+          <div className="iching-changed-panel">
+            <h4 className="iching-changed-title">變卦結果</h4>
+            <div className="iching-changed-lines">
+              {changedHexagramInfo.changedLines?.map((isYang, index) => (
+                <div key={index} className="iching-changed-line" style={{ opacity: changingLines[index] ? 1 : 0.6 }}>
+                  <div className="iching-changed-svg">
+                    <svg width="120" height="20" viewBox="0 0 120 20">
+                      {isYang ? (
                         <rect
                           x="10"
                           y="8"
-                          width="40"
+                          width="100"
                           height="4"
                           fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
                           rx="2"
                         />
-                        <rect
-                          x="70"
-                          y="8"
-                          width="40"
-                          height="4"
-                          fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
-                          rx="2"
-                        />
-                      </>
-                    )}
-                  </svg>
+                      ) : (
+                        <React.Fragment>
+                          <rect
+                            x="10"
+                            y="8"
+                            width="40"
+                            height="4"
+                            fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                            rx="2"
+                          />
+                          <rect
+                            x="70"
+                            y="8"
+                            width="40"
+                            height="4"
+                            fill={changingLines[index] ? '#dc3545' : '#2c3e50'}
+                            rx="2"
+                          />
+                        </React.Fragment>
+                      )}
+                    </svg>
+                  </div>
+                  <div className="iching-changed-label">
+                    第{index + 1}爻 - {isYang ? '陽' : '陰'}
+                    {changingLines[index] && <span className="changed">變</span>}
+                  </div>
                 </div>
-                <div className="iching-changed-label">
-                  第{index + 1}爻 - {isYang ? '陽' : '陰'}
-                  {changingLines[index] && <span className="changed">變</span>}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="iching-changed-info">
+              <p className="iching-changed-name">{changedHexagramInfo.fullName}</p>
+              <p className="iching-changed-pos">
+                變爻位置：{changingLines.map((isChanging, index) =>
+                  isChanging ? `第${index + 1}爻` : null
+                ).filter(Boolean).join('、')}
+              </p>
+            </div>
           </div>
-          <div className="iching-changed-info">
-            <p className="iching-changed-name">{changedHexagramInfo.fullName}</p>
-            <p className="iching-changed-pos">
-              變爻位置：{changingLines.map((isChanging, index) =>
-                isChanging ? `第${index + 1}爻` : null
-              ).filter(Boolean).join('、')}
-            </p>
-          </div>
-        </div>
+        </React.Fragment>
       )}
 
       <div className="iching-help">
