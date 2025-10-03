@@ -449,15 +449,6 @@ const IChing: React.FC = () => {
                   頁數：{changedHexagramInfo.page}
                 </span>
               </p>
-              <p className="iching-changed-pos">
-                變爻位置：
-                {changingLines
-                  .map((isChanging, index) =>
-                    isChanging ? `第${index + 1}爻` : null
-                  )
-                  .filter(Boolean)
-                  .join("、")}
-              </p>
             </div>
           </div>
         </React.Fragment>
