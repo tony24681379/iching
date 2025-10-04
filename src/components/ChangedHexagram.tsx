@@ -19,7 +19,7 @@ const ChangedHexagram: React.FC<ChangedHexagramProps> = ({
 }) => {
   return (
     <div className="iching-changed-panel">
-      <h4 className="iching-changed-title">變卦結果</h4>
+      <h3 className="iching-changed-title">變卦結果</h3>
       <div className="iching-changed-lines">
         {info.changedLines.map((_, i, arr) => {
           const idx = arr.length - 1 - i;

@@ -10,10 +10,10 @@
 
 .iching-changed-title {
   color: #721c24;
-  margin-bottom: 15px;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
+  margin: 0 0 15px 0;
 }
 
 .iching-changed-lines {

@@ -26,9 +26,7 @@ const HexagramDisplay: React.FC<HexagramDisplayProps> = ({
 }) => {
   return (
     <div className="iching-panel">
-      <div className="iching-panel-header">
-        <h3 className="iching-panel-header-title">起卦</h3>
-      </div>
+      <h3 className="iching-panel-header-title">起卦</h3>
       <div className="iching-lines">
         {[...select].map((_, i) => {
           const idx = select.length - 1 - i;
