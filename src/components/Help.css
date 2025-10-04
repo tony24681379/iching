@@ -1,0 +1,21 @@
+.iching-help {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding: 15px;
+  background-color: #d1ecf1;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0c5460;
+  border: 2px solid #b7e2ea;
+}
+
+.iching-help strong {
+  font-size: 22px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.iching-help-lines div {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,74 @@
+.iching-panel {
+  background-color: #ede3c7;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 2px solid #c2a06a;
+  box-shadow: 0 2px 8px rgba(108, 74, 36, 0.08);
+}
+
+.iching-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.iching-panel-header-title {
+  color: #495057;
+  margin: 0 auto;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+}
+
+.iching-lines {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 4px;
+}
+
+.iching-random-btn-row {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 8px 0;
+}
+
+.iching-random-btn {
+  background-color: #c97a40;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.iching-random-btn:hover {
+  background-color: #a05c2a;
+}
+
+.iching-info-main {
+  line-height: 1.8;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.iching-info-page {
+  font-size: 14px;
+  color: #888;
+  margin-top: 2px;
+  display: inline-block;
+}
+
+.iching-info-warn {
+  color: #dc3545;
+}

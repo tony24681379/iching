@@ -1,154 +1,15 @@
 import React, { useState } from "react";
-import YinYang from "./YinYang";
+
 import "./IChing.css";
-import ChangedLine from "./ChangedLine";
+
+import Help from "./Help";
+
+import HexagramDisplay from "./HexagramDisplay";
+
+import ChangedHexagram from "./ChangedHexagram";
+import { getHexagramInfo, getChangedHexagramInfo } from "../lib/hexagrams";
 
 const IChing: React.FC = () => {
-  // 64 卦象名稱陣列（按照傳統編號順序）
-  const hexagramNames = [
-    "乾",
-    "坤",
-    "屯",
-    "蒙",
-    "需",
-    "訟",
-    "師",
-    "比",
-    "小畜",
-    "履",
-    "泰",
-    "否",
-    "同人",
-    "大有",
-    "謙",
-    "豫",
-    "隨",
-    "蠱",
-    "臨",
-    "觀",
-    "噬嗑",
-    "賁",
-    "剝",
-    "復",
-    "無妄",
-    "大畜",
-    "頤",
-    "大過",
-    "坎",
-    "離",
-    "咸",
-    "恆",
-    "遯",
-    "大壯",
-    "晉",
-    "明夷",
-    "家人",
-    "睽",
-    "蹇",
-    "解",
-    "損",
-    "益",
-    "夬",
-    "姤",
-    "萃",
-    "升",
-    "困",
-    "井",
-    "革",
-    "鼎",
-    "震",
-    "艮",
-    "漸",
-    "歸妹",
-    "豐",
-    "旅",
-    "巽",
-    "兌",
-    "渙",
-    "節",
-    "中孚",
-    "小過",
-    "既濟",
-    "未濟",
-  ];
-
-  const pages = [
-    25, 47, 59, 67, 75, 81, 89, 97, 103, 109, 115, 123, 129, 137, 143, 149, 155,
-    163, 171, 177, 183, 191, 197, 203, 211, 217, 223, 229, 235, 241, 249, 257,
-    263, 279, 275, 281, 289, 295, 303, 309, 317, 325, 333, 339, 347, 355, 361,
-    369, 375, 383, 389, 395, 401, 407, 413, 419, 425, 431, 437, 443, 449, 457,
-    465, 473,
-  ];
-
-  // 建立六爻組合到卦象編號的映射表
-  // 格式: "從下到上六爻的二進位字串" -> 卦象編號(1-64)
-  const hexagramMapping: { [key: string]: number } = {
-    "111111": 1, // 乾為天 ☰☰
-    "000000": 2, // 坤為地 ☷☷
-    "010001": 3, // 水雷屯 ☵☳
-    "100010": 4, // 山水蒙 ☶☵
-    "111010": 5, // 水天需 ☵☰
-    "010111": 6, // 天水訟 ☰☵
-    "000010": 7, // 地水師 ☷☵
-    "010000": 8, // 水地比 ☵☷
-    "111011": 9, // 風天小畜 ☴☰
-    "110111": 10, // 天澤履 ☰☱
-    "000111": 11, // 地天泰 ☷☰
-    "111000": 12, // 天地否 ☰☷
-    "111101": 13, // 天火同人 ☰☲
-    "101111": 14, // 火天大有 ☲☰
-    "000100": 15, // 地山謙 ☷☶
-    "001000": 16, // 雷地豫 ☳☷
-    "011001": 17, // 澤雷隨 ☱☳
-    "100110": 18, // 山風蠱 ☶☴
-    "000011": 19, // 地澤臨 ☷☱
-    "110000": 20, // 風地觀 ☴☷
-    "101001": 21, // 火雷噬嗑 ☲☳
-    "100101": 22, // 山火賁 ☶☲
-    "100000": 23, // 山地剝 ☶☷
-    "000001": 24, // 地雷復 ☷☳
-    "111001": 25, // 天雷無妄 ☰☳
-    "100111": 26, // 山天大畜 ☶☰
-    "100001": 27, // 山雷頤 ☶☳
-    "011110": 28, // 澤風大過 ☱☴
-    "010010": 29, // 坎為水 ☵☵
-    "101101": 30, // 離為火 ☲☲
-    "011100": 31, // 澤山咸 ☱☶
-    "001110": 32, // 雷風恆 ☳☴
-    "111100": 33, // 天山遯 ☰☶
-    "001111": 34, // 雷天大壯 ☳☰
-    "101000": 35, // 火地晉 ☲☷
-    "000101": 36, // 地火明夷 ☷☲
-    "110101": 37, // 風火家人 ☴☲
-    "101011": 38, // 火澤睽 ☲☱
-    "010100": 39, // 水山蹇 ☵☶
-    "001010": 40, // 雷水解 ☳☵
-    "100011": 41, // 山澤損 ☶☱
-    "110001": 42, // 風雷益 ☴☳
-    "011111": 43, // 澤天夬 ☱☰
-    "111110": 44, // 天風姤 ☰☴
-    "011000": 45, // 澤地萃 ☱☷
-    "000110": 46, // 地風升 ☷☴
-    "011010": 47, // 澤水困 ☱☵
-    "010110": 48, // 水風井 ☵☴
-    "011101": 49, // 澤火革 ☱☲
-    "101110": 50, // 火風鼎 ☲☴
-    "001001": 51, // 震為雷 ☳☳
-    "100100": 52, // 艮為山 ☶☶
-    "110100": 53, // 風山漸 ☴☶
-    "001011": 54, // 雷澤歸妹 ☳☱
-    "001101": 55, // 雷火豐 ☳☲
-    "101100": 56, // 火山旅 ☲☶
-    "110110": 57, // 巽為風 ☴☴
-    "011011": 58, // 兌為澤 ☱☱
-    "110010": 59, // 風水渙 ☴☵
-    "010011": 60, // 水澤節 ☵☱
-    "110011": 61, // 風澤中孚 ☴☱
-    "001100": 62, // 雷山小過 ☳☶  // 修正：小過卦應該是 001100
-    "010101": 63, // 水火既濟 ☵☲
-    "101010": 64, // 火水未濟 ☲☵
-  };
-
   // select[6] 陣列，true 為陽，false 為陰
   const [select, setSelect] = useState<boolean[]>([
     true,
@@ -228,179 +89,31 @@ const IChing: React.FC = () => {
     setChangingLines(newChangingLines.reverse());
   };
 
-  // 將布林陣列轉換為卦象名稱
-  const getHexagramInfo = () => {
-    // 將陣列反轉，因為易經爻序是從下到上（第一爻在下，第六爻在上）
-    // 但我們的陣列索引是從上到下的
-    const reversedSelect = [...select];
-    const binaryString = reversedSelect
-      .map((val) => (val ? "1" : "0"))
-      .join("");
-
-    // 從映射表中查找對應的卦象編號
-    const hexagramNumber = hexagramMapping[binaryString];
-
-    if (hexagramNumber) {
-      const hexagramIndex = hexagramNumber - 1; // 陣列索引從0開始
-      return {
-        binary: binaryString,
-        decimal: hexagramNumber,
-        index: hexagramIndex,
-        name: hexagramNames[hexagramIndex],
-        page: pages[hexagramIndex],
-        fullName: `第 ${hexagramNumber} 卦 - ${hexagramNames[hexagramIndex]}`,
-        isValid: true,
-      };
-    } else {
-      // 如果沒有找到對應的卦象，顯示錯誤資訊
-      return {
-        binary: binaryString,
-        decimal: 0,
-        index: -1,
-        name: "未知",
-        fullName: `未知卦象 (${binaryString})`,
-        isValid: false,
-      };
-    }
-  };
-
-  // 計算變卦結果
-  const getChangedHexagramInfo = () => {
-    // 如果沒有變爻，返回 null
-    const hasChangingLines = changingLines.some((line) => line);
-    if (!hasChangingLines) {
-      return null;
-    }
-
-    // 計算變卦：變爻的陰陽會顛倒
-    const changedSelect = select.map((value, index) =>
-      changingLines[index] ? !value : value
-    );
-
-    const binaryString = changedSelect.map((val) => (val ? "1" : "0")).join("");
-
-    // 從映射表中查找對應的卦象編號
-    const hexagramNumber = hexagramMapping[binaryString];
-
-    if (hexagramNumber) {
-      const hexagramIndex = hexagramNumber - 1;
-      return {
-        binary: binaryString,
-        decimal: hexagramNumber,
-        index: hexagramIndex,
-        name: hexagramNames[hexagramIndex],
-        page: pages[hexagramIndex],
-        fullName: `第 ${hexagramNumber} 卦 - ${hexagramNames[hexagramIndex]}`,
-        isValid: true,
-        changedLines: changedSelect,
-      };
-    } else {
-      return {
-        binary: binaryString,
-        decimal: 0,
-        index: -1,
-        name: "未知",
-        fullName: `未知變卦 (${binaryString})`,
-        isValid: false,
-        changedLines: changedSelect,
-      };
-    }
-  };
-
-  const hexagramInfo = getHexagramInfo();
-  const changedHexagramInfo = getChangedHexagramInfo();
+  const hexagramInfo = getHexagramInfo(select);
+  const changedHexagramInfo = getChangedHexagramInfo(select, changingLines);
 
   return (
     <div className="iching-root">
       <h1 className="iching-title">易經卦象速查</h1>
 
-      <div className="iching-help">
-        <strong>使用說明</strong>
-        <div className="iching-help-lines">
-          <div>每個卦象由6個爻組成（從下到上：第1爻到第6爻）</div>
-          <div>點擊線條可以切換陰爻（斷線）和陽爻（實線）</div>
-          <div>點擊右側圓點可以設定變爻（虛線圓=不變，實心圓=變爻）</div>
-          <div>變爻會使該爻的陰陽顛倒，形成變卦</div>
-          <div>共有 64 種可能的卦象組合</div>
-        </div>
-      </div>
+      <Help />
 
-      <div className="iching-panel">
-        <div className="iching-panel-header">
-          <h3 className="iching-panel-header-title">起卦</h3>
-        </div>
-        <div className="iching-lines">
-          {[...select].map((_, i) => {
-            const idx = select.length - 1 - i;
-            // indexForDisplay: 6~1
-            const indexForDisplay = i;
-            return (
-              <YinYang
-                key={idx}
-                isYang={select[idx]}
-                onClick={() => toggleYinYang(idx)}
-                index={indexForDisplay}
-                isChanging={changingLines[idx]}
-                onChangingToggle={() => toggleChangingLine(idx)}
-              />
-            );
-          })}
-        </div>
-        <div className="iching-random-btn-row">
-          <button
-            className="iching-random-btn"
-            onClick={generateRandomHexagram}
-          >
-            隨機起卦
-          </button>
-        </div>
-        <div
-          className="iching-info-main"
-          style={{ marginTop: "20px", textAlign: "center" }}
-        >
-          <p
-            className={`iching-info-name ${
-              hexagramInfo.isValid ? "valid" : "invalid"
-            }`}
-          >
-            {hexagramInfo.fullName}
-            <br />
-            <span className="iching-info-page">頁數：{hexagramInfo.page}</span>
-          </p>
-          {hexagramInfo.isValid ? null : (
-            <p className="iching-info-warn">⚠️ 此組合不對應傳統易經卦象</p>
-          )}
-        </div>
-      </div>
+      {hexagramInfo && (
+        <HexagramDisplay
+          select={select}
+          changingLines={changingLines}
+          hexagramInfo={hexagramInfo}
+          toggleYinYang={toggleYinYang}
+          toggleChangingLine={toggleChangingLine}
+          generateRandomHexagram={generateRandomHexagram}
+        />
+      )}
 
-      {changedHexagramInfo && (
-        <React.Fragment>
-          <div className="iching-changed-panel">
-            <h4 className="iching-changed-title">變卦結果</h4>
-            <div className="iching-changed-lines">
-              {changedHexagramInfo.changedLines.map((_, i, arr) => {
-                const idx = arr.length - 1 - i;
-                return (
-                  <ChangedLine
-                    key={idx}
-                    isYang={arr[idx]}
-                    isChanged={changingLines[idx]}
-                    index={i}
-                  />
-                );
-              })}
-            </div>
-            <div className="iching-changed-info">
-              <p className="iching-changed-name">
-                {changedHexagramInfo.fullName}
-                <br />
-                <span className="iching-info-page">
-                  頁數：{changedHexagramInfo.page}
-                </span>
-              </p>
-            </div>
-          </div>
-        </React.Fragment>
+      {changedHexagramInfo && changingLines.some((line) => line) && (
+        <ChangedHexagram
+          info={changedHexagramInfo}
+          originalChangingLines={changingLines}
+        />
       )}
     </div>
   );
