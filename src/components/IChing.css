@@ -10,13 +10,7 @@
   justify-content: center;
   margin: 18px 0 8px 0;
 }
-/* 變卦 SVG 線條顏色 */
-.normal-line-svg {
-  fill: #2c3e50;
-}
-.changed-line-svg {
-  fill: #dc3545;
-}
+
 /* IChing 卦象主頁樣式 */
 
 .iching-root {
@@ -162,23 +156,7 @@
   gap: 4px;
   margin-bottom: 15px;
 }
-.iching-changed-line {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 4px 0;
-}
-.iching-changed-svg {
-  padding: 4px;
-}
-.iching-changed-label {
-  font-size: 12px;
-  color: #721c24;
-  min-width: 80px;
-}
-.iching-changed-label .changed {
-  margin-left: 4px;
-}
+
 .iching-changed-info {
   text-align: center;
 }

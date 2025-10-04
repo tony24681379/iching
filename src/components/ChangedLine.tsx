@@ -1,7 +1,9 @@
 import React from "react";
 import yangSvg from "../assets/yang.svg";
 import yinSvg from "../assets/yin.svg";
-import "./IChing.css";
+import yangChangedSvg from "../assets/yang-changed.svg";
+import yinChangedSvg from "../assets/yin-changed.svg";
+import "./ChangedLine.css";
 
 interface ChangedLineProps {
   isYang: boolean;
@@ -14,6 +16,13 @@ const ChangedLine: React.FC<ChangedLineProps> = ({
   isChanged,
   index,
 }) => {
+  const getSvgSrc = () => {
+    if (isChanged) {
+      return isYang ? yangChangedSvg : yinChangedSvg;
+    }
+    return isYang ? yangSvg : yinSvg;
+  };
+
   return (
     <div
       className="iching-changed-line"
@@ -21,11 +30,10 @@ const ChangedLine: React.FC<ChangedLineProps> = ({
     >
       <div className="iching-changed-svg">
         <img
-          src={isYang ? yangSvg : yinSvg}
+          src={getSvgSrc()}
           alt={isYang ? "陽爻" : "陰爻"}
           width={120}
           height={20}
-          className={isChanged ? "changed-line-svg" : "normal-line-svg"}
         />
       </div>
       <div className="iching-changed-label">
