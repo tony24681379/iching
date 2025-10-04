@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./IChing.css";
 
@@ -11,7 +11,14 @@ import Settings from "./Settings";
 import { getHexagramInfo, getChangedHexagramInfo } from "../lib/hexagrams";
 
 const IChing: React.FC = () => {
-  const [showPageNumber, setShowPageNumber] = useState(false);
+  const [showPageNumber, setShowPageNumber] = useState(() => {
+    const saved = localStorage.getItem("showPageNumber");
+    return saved !== null ? JSON.parse(saved) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("showPageNumber", JSON.stringify(showPageNumber));
+  }, [showPageNumber]);
 
   // select[6] 陣列，true 為陽，false 為陰
   const [select, setSelect] = useState<boolean[]>([
@@ -96,7 +103,7 @@ const IChing: React.FC = () => {
   const changedHexagramInfo = getChangedHexagramInfo(select, changingLines);
 
   const togglePageNumber = () => {
-    setShowPageNumber((prev) => !prev);
+    setShowPageNumber((prev: boolean) => !prev);
   };
 
   return (
