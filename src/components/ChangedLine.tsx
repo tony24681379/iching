@@ -11,6 +11,8 @@ interface ChangedLineProps {
   index: number;
 }
 
+const lineNames = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
+
 const ChangedLine: React.FC<ChangedLineProps> = ({
   isYang,
   isChanged,
@@ -37,7 +39,7 @@ const ChangedLine: React.FC<ChangedLineProps> = ({
         />
       </div>
       <div className="iching-changed-label">
-        第{index + 1}爻 - {isYang ? "陽" : "陰"}
+        {lineNames[index]} - {isYang ? "陽" : "陰"}
         {isChanged && <span className="changed">變</span>}
       </div>
     </div>

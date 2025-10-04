@@ -13,6 +13,8 @@ interface YinYangProps {
   onChangingToggle: () => void;
 }
 
+const lineNames = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
+
 const YinYang: React.FC<YinYangProps> = ({
   isYang,
   onClick,
@@ -44,7 +46,7 @@ const YinYang: React.FC<YinYangProps> = ({
 
       {/* 爻位標籤 */}
       <div className="yinyang-label">
-        第{index + 1}爻 - {isYang ? "陽" : "陰"}
+        {lineNames[index]} - {isYang ? "陽" : "陰"}
         {isChanging && <span className="changed">變</span>}
       </div>
     </div>
