@@ -28,7 +28,7 @@ const YinYang: React.FC<YinYangProps> = ({
           src={isYang ? yangSvg : yinSvg}
           alt={isYang ? "陽爻" : "陰爻"}
           width={120}
-          height={20}
+          height={18}
         />
       </div>
 
@@ -37,8 +37,8 @@ const YinYang: React.FC<YinYangProps> = ({
         <img
           src={isChanging ? dotActiveSvg : dotSvg}
           alt={isChanging ? "變爻" : "圓點"}
-          width={16}
-          height={16}
+          width={18}
+          height={18}
         />
       </div>
 
