@@ -7,9 +7,12 @@ import Help from "./Help";
 import HexagramDisplay from "./HexagramDisplay";
 
 import ChangedHexagram from "./ChangedHexagram";
+import Settings from "./Settings";
 import { getHexagramInfo, getChangedHexagramInfo } from "../lib/hexagrams";
 
 const IChing: React.FC = () => {
+  const [showPageNumber, setShowPageNumber] = useState(false);
+
   // select[6] 陣列，true 為陽，false 為陰
   const [select, setSelect] = useState<boolean[]>([
     true,
@@ -92,8 +95,16 @@ const IChing: React.FC = () => {
   const hexagramInfo = getHexagramInfo(select);
   const changedHexagramInfo = getChangedHexagramInfo(select, changingLines);
 
+  const togglePageNumber = () => {
+    setShowPageNumber((prev) => !prev);
+  };
+
   return (
     <div className="iching-root">
+      <Settings
+        onTogglePageNumber={togglePageNumber}
+        showPageNumber={showPageNumber}
+      />
       <h1 className="iching-title">易經卦象速查</h1>
 
       <Help />
@@ -106,6 +117,7 @@ const IChing: React.FC = () => {
           toggleYinYang={toggleYinYang}
           toggleChangingLine={toggleChangingLine}
           generateRandomHexagram={generateRandomHexagram}
+          showPageNumber={showPageNumber}
         />
       )}
 
@@ -113,6 +125,7 @@ const IChing: React.FC = () => {
         <ChangedHexagram
           info={changedHexagramInfo}
           originalChangingLines={changingLines}
+          showPageNumber={showPageNumber}
         />
       )}
     </div>

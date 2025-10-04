@@ -14,6 +14,7 @@ interface HexagramDisplayProps {
   toggleChangingLine: (index: number) => void;
   generateRandomHexagram: () => void;
   hexagramInfo: HexagramInfo;
+  showPageNumber: boolean;
 }
 
 const HexagramDisplay: React.FC<HexagramDisplayProps> = ({
@@ -23,6 +24,7 @@ const HexagramDisplay: React.FC<HexagramDisplayProps> = ({
   toggleChangingLine,
   generateRandomHexagram,
   hexagramInfo,
+  showPageNumber,
 }) => {
   return (
     <div className="iching-panel">
@@ -51,8 +53,14 @@ const HexagramDisplay: React.FC<HexagramDisplayProps> = ({
       <div className="iching-info-main">
         <p className="hexagram-result">
           {hexagramInfo.fullName}
-          <br />
-          <span className="iching-info-page">頁數：{hexagramInfo.page}</span>
+          {showPageNumber && (
+            <>
+              <br />
+              <span className="iching-info-page">
+                頁數：{hexagramInfo.page}
+              </span>
+            </>
+          )}
         </p>
       </div>
     </div>

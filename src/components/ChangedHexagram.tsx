@@ -11,11 +11,13 @@ interface ChangedHexagramInfo {
 interface ChangedHexagramProps {
   info: ChangedHexagramInfo;
   originalChangingLines: boolean[];
+  showPageNumber: boolean;
 }
 
 const ChangedHexagram: React.FC<ChangedHexagramProps> = ({
   info,
   originalChangingLines,
+  showPageNumber,
 }) => {
   return (
     <div className="iching-changed-panel">
@@ -36,8 +38,12 @@ const ChangedHexagram: React.FC<ChangedHexagramProps> = ({
       <div className="iching-changed-info">
         <p className="hexagram-result">
           {info.fullName}
-          <br />
-          <span className="iching-info-page">頁數：{info.page}</span>
+          {showPageNumber && (
+            <>
+              <br />
+              <span className="iching-info-page">頁數：{info.page}</span>
+            </>
+          )}
         </p>
       </div>
     </div>
