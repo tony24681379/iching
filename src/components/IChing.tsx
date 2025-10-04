@@ -154,9 +154,9 @@ const IChing: React.FC = () => {
     true,
     true,
     true,
-    false,
-    false,
-    false,
+    true,
+    true,
+    true,
   ]);
 
   // changingLines[6] 陣列，true 為變爻，false 為不變
@@ -351,7 +351,7 @@ const IChing: React.FC = () => {
             className="iching-random-btn"
             onClick={generateRandomHexagram}
           >
-            隨機卦象
+            隨機起卦
           </button>
         </div>
         <div
